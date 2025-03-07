@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <script>
+        // Function to handle form submission
+        function submitForm(event) {
+            event.preventDefault();  // Prevent page refresh
+
+            var formData = new FormData(document.getElementById('messageForm'));
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "send_message.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('response').innerHTML = xhr.responseText; // Display server response
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</head>
+<body>
+    <h2>Send Us a Message</h2>
+    <form id="messageForm" onsubmit="submitForm(event)">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" required></textarea><br><br>
+
+        <button type="submit">Send Message</button>
+    </form>
+
+    <div id="response"></div> <!-- Response from backend will be shown here -->
+</body>
+</html>
